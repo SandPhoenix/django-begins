@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% load facemash_extras %}
+<link rel="stylesheet" type="text/css" href="{% static 'facemash/board.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'facemash/font-awesome/css/font-awesome.min.css' %}">
+<link href="{% static 'facemash/bitter.css' %}" rel='stylesheet' type='text/css'>
+
+<html>
+	<body>
+		<div id="header">
+			<a id="title" href="{% url 'facemash:choose' u_list.1.user_gender %}">Choosr</a>
+		</div>
+		<div id="rank_div">
+			<ul id="rank_ol">
+				{% for user in u_list %}
+					<li>
+						<div class="user_element">
+							<img src="{% static 'facemash/images/cropped/'|addstr:user.user_id|addstr:'.jpg' %}" width="65" height="65">
+							<div class="user_name" href="">{{ user.user_name }}</div>
+							<div class="rank_number">{{ forloop.counter|romanize:'upper' }}</div>
+						</div>
+					</li>
+				{% endfor %}
+			</ol>
+		</div>
+	</body>
+</html>

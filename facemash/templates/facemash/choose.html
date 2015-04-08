@@ -1,0 +1,69 @@
+{% load staticfiles %}
+{% load facemash_extras %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'facemash/choose.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'facemash/font-awesome/css/font-awesome.min.css' %}">
+<link href="{% static 'facemash/bitter.css' %}" rel='stylesheet' type='text/css'>
+
+<html>
+	<body>
+		{% if gender %}
+			<div id="header">
+				<form action="{% url 'facemash:board' user_A.user_gender %}">
+				    <input id="rank_button" type="submit" value="Rankings">
+				</form>
+				<a id="title" href="{% url 'facemash:choose' user_A.user_gender %}">Choosr</a>
+			</div>
+			<div id="outer_container">
+				<div style="float:left;margin-left:20px;" class="inner_container">
+					<a href="{% url 'facemash:vote' user_B.user_id_string user_A.user_id_string %}" id="left_img" ><img id="left" src='{% static "facemash/images/cropped/"|addstr:user_A.user_id|addstr:".jpg" %}' height="300" width="300" style="max-height: 100%; max-width: 100%;"></a>
+				</div>
+				<div style="float:right;margin-right:20px;" class="inner_container">
+					<a href="{% url 'facemash:vote' user_A.user_id_string user_B.user_id_string %}" id="right_img" ><img id="right" src='{% static "facemash/images/cropped/"|addstr:user_B.user_id|addstr:".jpg" %}' height="300" width="300" style="max-height: 100%; max-width: 100%;" ></a>
+
+				</div>
+			</div>
+			<div id="arrow_outer_container">
+				<div style="float:left;" class="arrow_inner_container">
+					<a href="{% url 'facemash:vote' user_B.user_id_string user_A.user_id_string %}" id="left_img" ><i class="fa fa-arrow-left" style="font-size:200;color:#DF514B;" id="left_arrow"></i></a>
+				</div>
+				<div style="float:right;" class="arrow_inner_container">
+					<a href="{% url 'facemash:vote' user_A.user_id_string user_B.user_id_string %}" id="right_img" ><i class="fa fa-arrow-right" style="font-size:200;color:#DF514B;" id="right_arrow"></i></a>
+				</div>
+			</div>
+			
+			<script type="text/javascript">
+				// var img = document.images
+				// for (var i=0; i<img.length; i++) {
+				// 	var a = img[i];
+				// 	if ( a.naturalWidth > a.naturalHeight ){
+				// 		a.height = "300";
+				// 	}else{
+				// 		a.width = "300";
+				// 	}
+				// }
+				function leftArrowPressed() {
+				   document.getElementById('left_img').click();
+				}
+
+				function rightArrowPressed() {
+				   document.getElementById('right_img').click();
+				}
+
+
+
+				document.onkeydown = function(evt) {
+				    evt = evt || window.event;
+				    switch (evt.keyCode) {
+				        case 37:
+				            leftArrowPressed();
+				            break;
+				        case 39:
+				            rightArrowPressed();
+				            break;
+				    }
+				};
+			</script>
+		{% endif %}
+	</body>
+</html>

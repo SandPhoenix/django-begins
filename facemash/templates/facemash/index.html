@@ -1,0 +1,12 @@
+{% load staticfiles %}
+<html>
+	<h1>What do you want to see?</h1>
+	<form action="{% url 'facemash:choose' 'm' %}" method="post">
+		{% csrf_token %}
+		<input type="submit" value="Male"/>
+	</form>
+	<form action="{% url 'facemash:choose' 'f' %}" method="post">
+		{% csrf_token %}
+		<input type="submit" value="Female"/>		
+	</form>
+</html>

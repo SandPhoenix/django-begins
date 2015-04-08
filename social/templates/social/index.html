@@ -1,0 +1,74 @@
+<head>
+	<title id>SOCIAL</title>
+	{% load staticfiles %}
+	<link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="{% static 'social/index_style.css' %}">
+</head>
+<body>
+	<form action="{% url 'social:index' %}" method="post">
+	{% csrf_token %}
+		{% if logged_in == True %}
+			<div id="topBar">		
+				<input id="logoutButton" type="submit" value="Log out">
+				<input type="hidden" name="should_log_in" value=""/>
+				<div id="topBarHeader">
+					Hello there, <b>{{ username }}</b> 
+				</div>
+			</div>
+		{% endif %}
+	</form>
+		<div id="titleWrapper">
+			<div id="mainHeader">SOCIAL</div>
+			<br />
+			<div id="subHeader">The minimal social network</div>
+		</div>
+	<br />
+	<div id="contentWrapper">
+		{% if logged_in == True %}
+			<form action="{% url 'social:post' %}" method="post">
+			{% csrf_token %}
+				<textarea id="commentArea" name="post_text" placeholder="Tell me your secrets..." cols="100" rows="3"></textarea>
+				<br />
+				<input class="genButton" id="postButton" type="submit" value="Post" />
+			</form>
+			
+		{% endif %}
+
+		{% for post in post_list %}
+			<div class="postWrapper">
+				<div class="postText">
+					{{ post.post_text }}<br />
+					{# <b>{{post.post_kudos}} Kudo{{post.post_kudos|pluralize}}</b> -  #}
+				</div>
+				<div class="kudoWrapper">
+					{{post.post_kudos}} 
+				</div>
+				<div class="postInfo">Posted by <b>{{ post.post_user.username }}</b> at {{ post.post_date}}</div>
+				
+			</div>
+			
+		{% endfor %}
+		{% if logged_in == False %}
+		<div id="loginWrapper">
+			<form action="{% url 'social:index' %}" method="post">
+			{% csrf_token %}
+			{% if logged_in == False %}
+				<div id="usernameWrapper"><span>Username: <input class="loginTextBox" type="text" name="user"/></span></div>
+				<div id="passwordWrapper"><span>Password: <input class="loginTextBox" type="password" name="pass"/></span></div>
+				<input type="hidden" name="should_log_in" value="True"/>
+				<br />
+				<input class="genButton" id="footButton_1" type="submit" value="Login">
+			{% endif %}
+				
+			</form>
+
+			{% if logged_in == False %}
+			<form action="{% url 'social:signup'%}" method="post">
+			{% csrf_token %}
+				<input class="genButton" id="footButton_2" type="submit" value="Sign Up">
+			</form>
+			{% endif %}
+		</div>
+		{% endif %}
+	</div>
+</body>

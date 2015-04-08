@@ -1,0 +1,19 @@
+<head>
+	<title>SOCIAL</title>
+</head>
+<body>
+	<h1>SOCIAL - The minimal social network</h1>
+	<hr />
+	<br />
+	<h2>Sign Up</h2>
+	<br />
+	<form action="{% url 'social:signup' %}" method="post">
+	{% csrf_token %}
+		<input type="hidden" value="True" name="should_sign_up"/>
+		Username:<br /><input type="text" name="username"/><br />
+		Password: ( at least eight characters )<br /><input type="password" name="password" /><br />
+		First name:<br /><input type="text" name="first_name"/><br />
+		Last name:<br /><input type="text" name="last_name" />
+		<br /><input type="submit" value="Sign Up" />
+	</form>
+</body>
